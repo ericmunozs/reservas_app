@@ -1,71 +1,181 @@
 import 'package:flutter/material.dart';
 import 'package:reservas_app/domain/models/club.dart';
-import 'package:reservas_app/presentation/screens/profile/profile.dart';
-import 'package:reservas_app/presentation/widgets/settings_button.dart';
 
-class ClubDetailsScreen extends StatelessWidget {
+class ClubDetailsScreen extends StatefulWidget {
   final Club club;
 
   ClubDetailsScreen({required this.club});
 
   @override
+  _ClubDetailsScreenState createState() => _ClubDetailsScreenState();
+}
+
+class _ClubDetailsScreenState extends State<ClubDetailsScreen> {
+  bool isLiked = false;
+  int selectedTabIndex = 0;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(club.name),
-        actions: [
-          SettingsButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ProfileScreen()),
-              );
-            },
+      body: Stack(
+        children: [
+          Image.network(
+            widget.club.image ?? '',
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            fit: BoxFit.cover,
+          ),
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 10,
+            left: 10,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+          Positioned.fill(
+            top: MediaQuery.of(context).size.height * 0.25,
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(40.0),
+                  topLeft: Radius.circular(40.0),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.club.name,
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  widget.club.address ?? '',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            isLiked ? Icons.favorite : Icons.favorite_border,
+                            color: isLiked ? Colors.red : Colors.grey,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isLiked = !isLiked;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.grey.withOpacity(0.5),
+                        ),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () {
+                              setState(() {
+                                selectedTabIndex = 0;
+                              });
+                            },
+                            child: Text(
+                              'Home',
+                              style: TextStyle(
+                                color: selectedTabIndex == 0
+                                    ? Colors.black
+                                    : Colors.grey,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () {
+                              setState(() {
+                                selectedTabIndex = 1;
+                              });
+                            },
+                            child: Text(
+                              'Reservar',
+                              style: TextStyle(
+                                color: selectedTabIndex == 1
+                                    ? Colors.black
+                                    : Colors.grey,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: selectedTabIndex == 0
+                        ? buildHomeContent()
+                        : buildReservationContent(),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              club.name,
-              style: const TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
+    );
+  }
+
+  Widget buildHomeContent() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Información del club:',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
-            const SizedBox(height: 8.0),
-            Text(
-              club.description,
-              style: const TextStyle(fontSize: 16.0),
-            ),
-            const SizedBox(height: 16.0),
-            Text(
-              'Dirección: ${club.address ?? "No disponible"}',
-              style: const TextStyle(fontSize: 16.0),
-            ),
-            const SizedBox(height: 8.0),
-            Text(
-              'Teléfono: ${club.phone ?? "No disponible"}',
-              style: const TextStyle(fontSize: 16.0),
-            ),
-            const SizedBox(height: 8.0),
-            Text(
-              'Correo electrónico: ${club.email ?? "No disponible"}',
-              style: const TextStyle(fontSize: 16.0),
-            ),
-            const SizedBox(height: 8.0),
-            Text(
-              'Sitio web: ${club.website ?? "No disponible"}',
-              style: const TextStyle(fontSize: 16.0),
-            ),
-            const SizedBox(height: 16.0),
-            // Agregar más detalles del club aquí según sea necesario
-          ],
-        ),
+          ),
+          SizedBox(height: 10),
+          Text('Nombre: ${widget.club.name}'),
+          Text('Dirección: ${widget.club.address ?? ''}'),
+          Text('Descripción: ${widget.club.description ?? ''}'),
+        ],
       ),
     );
+  }
+
+  Widget buildReservationContent() {
+    return Placeholder();
   }
 }
