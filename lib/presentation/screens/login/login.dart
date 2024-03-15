@@ -1,17 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:reservas_app/data/firebase_authentication_service.dart';
+import 'package:reservas_app/data/authentication/firebase_authentication_repository.dart';
 
-class LoginScreen extends StatelessWidget {
-  final FirebaseAuthenticationService authService =
-      FirebaseAuthenticationService();
+class LoginScreen extends StatefulWidget {
+  LoginScreen({Key? key}) : super(key: key);
 
-  LoginScreen({super.key});
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final FirebaseAuthenticationRepository authService =
+      FirebaseAuthenticationRepository();
+
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    String emailAddress = '';
-    String password = '';
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
@@ -21,14 +40,14 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
-              onChanged: (value) => emailAddress = value,
+              controller: _emailController,
               decoration: const InputDecoration(
                 hintText: 'Ingrese su correo electrónico',
                 labelText: 'Correo electrónico',
               ),
             ),
             TextField(
-              onChanged: (value) => password = value,
+              controller: _passwordController,
               obscureText: true,
               decoration: const InputDecoration(
                 hintText: 'Ingrese su contraseña',
@@ -39,7 +58,10 @@ class LoginScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 try {
-                  await authService.login(emailAddress, password);
+                  await authService.login(
+                    _emailController.text,
+                    _passwordController.text,
+                  );
                 } catch (e) {}
               },
               child: const Text('Iniciar Sesión'),

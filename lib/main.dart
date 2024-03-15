@@ -1,15 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:reservas_app/core/l10n/l10n.dart';
 import 'package:reservas_app/presentation/screens/forgot_password/forgot_password.dart';
 import 'package:reservas_app/presentation/screens/home/home.dart';
 import 'package:reservas_app/presentation/screens/login/login.dart';
-import 'package:reservas_app/presentation/screens/profile/profile.dart';
 import 'package:reservas_app/presentation/screens/signup/signup.dart';
+
 import 'firebase_options.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,7 +73,6 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
             '/signup': (context) => const SignupScreen(),
             '/forgot-password': (context) => const ForgotPasswordScreen(),
             '/home': (context) => HomeScreen(),
-            '/profile': (context) => ProfileScreen(),
           },
           home: _buildHome(snapshot),
         );

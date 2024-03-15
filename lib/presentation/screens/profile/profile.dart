@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:reservas_app/data/firebase_authentication_service.dart';
+import 'package:reservas_app/data/authentication/firebase_authentication_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:reservas_app/presentation/widgets/language_selector.dart';
 
 class ProfileScreen extends StatelessWidget {
-  final FirebaseAuthenticationService authService =
-      FirebaseAuthenticationService();
+  final FirebaseAuthenticationRepository _authService =
+      FirebaseAuthenticationRepository();
 
   ProfileScreen({super.key});
 
@@ -23,7 +23,7 @@ class ProfileScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 try {
-                  await authService.logout();
+                  await _authService.logout();
                   Navigator.pushNamedAndRemoveUntil(
                       context, '/', (route) => false);
                 } catch (e) {}
