@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:reservas_app/data/authentication/firebase_authentication_repository.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   _LoginScreenState createState() => _LoginScreenState();

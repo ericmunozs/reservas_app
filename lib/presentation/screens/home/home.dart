@@ -1,16 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:reservas_app/data/authentication/firebase_authentication_repository.dart';
 import 'package:reservas_app/data/user/firebase_user_service.dart';
+import 'package:reservas_app/presentation/screens/login/login.dart';
 import 'package:reservas_app/presentation/screens/profile/profile.dart';
 import 'package:reservas_app/presentation/widgets/club_list.dart';
 import 'package:reservas_app/presentation/widgets/settings_button.dart';
 
 class HomeScreen extends StatelessWidget {
-  final FirebaseAuthenticationRepository authService =
+  final FirebaseAuthenticationRepository _authService =
       FirebaseAuthenticationRepository();
-  final FirebaseUserService userService = FirebaseUserService();
+  final FirebaseUserRepository _userService = FirebaseUserRepository();
 
-  HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +23,25 @@ class HomeScreen extends StatelessWidget {
           SettingsButton(
             onPressed: () {
               Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProfileScreen(),
-                ),
-              );
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FutureBuilder<User?>(
+                      future: _authService.getCurrentUser(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          if (snapshot.data == null) {
+                            return LoginScreen();
+                          }
+                          return ProfileScreen(uid: snapshot.data!.uid);
+                        }
+                      },
+                    ),
+                  ));
             },
           ),
         ],

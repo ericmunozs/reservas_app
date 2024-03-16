@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:reservas_app/main.dart';
 
 class LanguageSelector extends StatefulWidget {
-  const LanguageSelector({Key? key}) : super(key: key);
+  const LanguageSelector({super.key});
 
   @override
   _LanguageSelectorState createState() => _LanguageSelectorState();

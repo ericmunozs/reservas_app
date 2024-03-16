@@ -21,7 +21,7 @@ void main() async {
 }
 
 class AuthenticationWrapper extends StatefulWidget {
-  const AuthenticationWrapper({Key? key}) : super(key: key);
+  const AuthenticationWrapper({super.key});
 
   @override
   State<AuthenticationWrapper> createState() => _AuthenticationWrapperState();
@@ -86,7 +86,7 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
     }
     final User? user = snapshot.data;
     if (user == null) {
-      return LoginScreen();
+      return const LoginScreen();
     } else {
       return HomeScreen();
     }

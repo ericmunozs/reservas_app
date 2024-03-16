@@ -4,7 +4,7 @@ import 'package:reservas_app/domain/models/club.dart';
 class ClubDetailsScreen extends StatefulWidget {
   final Club club;
 
-  ClubDetailsScreen({required this.club});
+  const ClubDetailsScreen({super.key, required this.club});
 
   @override
   _ClubDetailsScreenState createState() => _ClubDetailsScreenState();
@@ -29,7 +29,7 @@ class _ClubDetailsScreenState extends State<ClubDetailsScreen> {
             top: MediaQuery.of(context).padding.top + 10,
             left: 10,
             child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.white),
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -159,14 +159,14 @@ class _ClubDetailsScreenState extends State<ClubDetailsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
+          const Text(
             'Información del club:',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text('Nombre: ${widget.club.name}'),
           Text('Dirección: ${widget.club.address ?? ''}'),
           Text('Descripción: ${widget.club.description ?? ''}'),
@@ -176,6 +176,6 @@ class _ClubDetailsScreenState extends State<ClubDetailsScreen> {
   }
 
   Widget buildReservationContent() {
-    return Placeholder();
+    return const Placeholder();
   }
 }

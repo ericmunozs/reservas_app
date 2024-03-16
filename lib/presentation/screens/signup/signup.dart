@@ -3,7 +3,7 @@ import 'package:reservas_app/data/authentication/firebase_authentication_reposit
 import 'package:reservas_app/data/user/firebase_user_service.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({Key? key}) : super(key: key);
+  const SignupScreen({super.key});
 
   @override
   _SignupScreenState createState() => _SignupScreenState();
@@ -12,7 +12,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final FirebaseAuthenticationRepository _authService =
       FirebaseAuthenticationRepository();
-  final FirebaseUserService _userService = FirebaseUserService();
+  final FirebaseUserRepository _userService = FirebaseUserRepository();
 
   late TextEditingController _nameController;
   late TextEditingController _emailController;

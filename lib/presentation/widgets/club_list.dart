@@ -3,7 +3,7 @@ import 'package:reservas_app/domain/models/club.dart';
 import 'package:reservas_app/presentation/screens/club_details/club_details.dart';
 
 class ClubList extends StatelessWidget {
-  const ClubList({Key? key}) : super(key: key);
+  const ClubList({super.key});
 
   @override
   Widget build(BuildContext context) {

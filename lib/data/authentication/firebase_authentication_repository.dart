@@ -22,6 +22,21 @@ class FirebaseAuthenticationRepository implements AuthenticationService {
   }
 
   @override
+  Future<User?> getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        return user;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  @override
   Future<UserCredential> signup(String emailAddress, String password) async {
     try {
       final credentials = await FirebaseAuth.instance
@@ -30,9 +45,9 @@ class FirebaseAuthenticationRepository implements AuthenticationService {
       return credentials;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        print('La contraseña es demasiado débil.');
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        print('La cuenta ya existe para ese correo electrónico.');
       }
       rethrow;
     } catch (e) {
