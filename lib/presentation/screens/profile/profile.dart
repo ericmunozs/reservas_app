@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reservas_app/data/authentication/firebase_authentication_repository.dart';
-import 'package:reservas_app/data/user/firebase_user_service.dart';
+import 'package:reservas_app/data/user/firebase_user_repository.dart';
 import 'package:reservas_app/domain/models/user.dart';
 
 class ProfileScreen extends StatefulWidget {

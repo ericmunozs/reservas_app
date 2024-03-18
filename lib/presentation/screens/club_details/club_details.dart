@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reservas_app/domain/models/club.dart';
+import 'package:reservas_app/presentation/widgets/booking_schedule.dart';
 
 class ClubDetailsScreen extends StatefulWidget {
   final Club club;
@@ -170,12 +171,15 @@ class _ClubDetailsScreenState extends State<ClubDetailsScreen> {
           Text('Nombre: ${widget.club.name}'),
           Text('Dirección: ${widget.club.address ?? ''}'),
           Text('Descripción: ${widget.club.description ?? ''}'),
+          Text('Teléfono: ${widget.club.phone ?? ''}'),
+          Text('Correo electrónico: ${widget.club.email ?? ''}'),
+          Text('Sitio web: ${widget.club.website ?? ''}'),
         ],
       ),
     );
   }
 
   Widget buildReservationContent() {
-    return const Placeholder();
+    return BookingSchedule();
   }
 }

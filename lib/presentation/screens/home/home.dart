@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:reservas_app/data/authentication/firebase_authentication_repository.dart';
-import 'package:reservas_app/data/user/firebase_user_service.dart';
 import 'package:reservas_app/presentation/screens/login/login.dart';
 import 'package:reservas_app/presentation/screens/profile/profile.dart';
 import 'package:reservas_app/presentation/widgets/club_list.dart';
@@ -10,7 +9,6 @@ import 'package:reservas_app/presentation/widgets/settings_button.dart';
 class HomeScreen extends StatelessWidget {
   final FirebaseAuthenticationRepository _authService =
       FirebaseAuthenticationRepository();
-  final FirebaseUserRepository _userService = FirebaseUserRepository();
 
   HomeScreen({super.key});
 
@@ -35,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                           return Text('Error: ${snapshot.error}');
                         } else {
                           if (snapshot.data == null) {
-                            return LoginScreen();
+                            return const LoginScreen();
                           }
                           return ProfileScreen(uid: snapshot.data!.uid);
                         }
@@ -46,11 +44,11 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             ClubList(),
           ],
         ),
