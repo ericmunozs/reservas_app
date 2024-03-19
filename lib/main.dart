@@ -85,7 +85,7 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
       return const CircularProgressIndicator();
     }
     final User? user = snapshot.data;
-    if (user == null) {
+    if (snapshot.hasError || user == null) {
       return const LoginScreen();
     } else {
       return HomeScreen();
